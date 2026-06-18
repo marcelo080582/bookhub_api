@@ -23,5 +23,17 @@ module Types
     def authors
       Author.all
     end
+
+    field :books, [Types::BookType], null: false
+
+    def books
+      Book.all
+    end
+
+    field :reviews, [Types::ReviewType], null: false
+
+    def reviews
+      Review.all
+    end
   end
 end
