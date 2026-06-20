@@ -18,10 +18,16 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    field :authors, [Types::AuthorType], null: false
+    field :authors, [Types::AuthorType], null: false do
+      argument :name, String, required: false
+    end
 
-    def authors
-      Author.all
+    def authors(name: nil)
+      scope = Author.all
+
+      scope = scope.where("name ILIKE ?", "%#{name}%") if name.present?
+
+      scope
     end
 
     field :author, Types::AuthorType, null: true do
