@@ -34,10 +34,26 @@ module Types
       Book.all
     end
 
+    field :book, Types::BookType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def book(id:)
+      Book.find_by(id: id)
+    end
+
     field :reviews, [Types::ReviewType], null: false
 
     def reviews
       Review.all
+    end
+
+   field :review, Types::ReviewType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def review(id:)
+      Review.find_by(id: id)
     end
   end
 end
