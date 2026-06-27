@@ -18,17 +18,7 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    field :authors, [Types::AuthorType], null: false do
-      argument :name, String, required: false
-    end
-
-    def authors(name: nil)
-      scope = Author.all
-
-      scope = scope.where("name ILIKE ?", "%#{name}%") if name.present?
-
-      scope
-    end
+    field :authors, resolver: Resolvers::AuthorsResolver
 
     field :author, Types::AuthorType, null: true do
       argument :id, ID, required: true
